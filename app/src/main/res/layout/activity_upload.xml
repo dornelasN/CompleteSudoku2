@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_upload"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.enkhturbadamsaikhan.completesudoku.UploadActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_upload_title"
+        android:text="@string/tv_upload_title"
+        android:textAllCaps="false"
+        android:textStyle="normal|bold"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tv_upload_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/b_upload_image"
+            android:layout_weight="0.01"
+            android:text="@string/b_upload_image"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_weight="0.01"
+            android:text="@string/b_upload_camera"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/iv_upload_grid"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/b_upload_upload"
+            android:layout_weight="0.01"
+            android:text="@string/b_upload_upload"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/b_upload_cancel"
+            android:layout_weight="0.01"
+            android:text="@string/cancelButton"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/upload_sudoku1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_upload_grid" />
+</RelativeLayout>

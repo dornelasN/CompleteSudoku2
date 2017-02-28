@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.enkhturbadamsaikhan.completesudoku.MainActivity">
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        android:checkable="false"/>
+    <item
+        android:id="@+id/logout_user"
+        android:orderInCategory="100"
+        android:title="@string/b_logout_main"
+        app:showAsAction="never"/>
+
+</menu>

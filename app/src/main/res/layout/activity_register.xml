@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.enkhturbadamsaikhan.completesudoku.RegisterActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_username"
+        android:text="@string/tv_username"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/et_username_register"
+        android:inputType="text"
+        android:layout_below="@+id/tv_username"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_email_register"
+        android:text="@string/tv_email"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/et_username_register"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/et_email_register"
+        android:layout_below="@+id/tv_email_register"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_email_register"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_password_register"
+        android:text="@string/tv_password_register"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/tv_password_register"
+        android:id="@+id/et_password_register"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/b_register"
+        android:text="@string/b_register"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/et_password_register"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -1,30 +1,27 @@
 package com.example.enkhturbadamsaikhan.completesudoku;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
+
+    private TextView nameTextView;
+    private TextView emailTextView;
+    private TextView uidTextView;
 
     private Button easy;
     private Button medium;
@@ -34,32 +31,28 @@ public class MainActivity extends AppCompatActivity {
     private Button upload;
     private Button saved;
 
-//    private DatabaseReference mDatabaseUsers;
-    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListener;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(getApplication());
-
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        nameTextView = (TextView) findViewById(R.id.nameTextView);
+        emailTextView = (TextView) findViewById(R.id.emailTextView);
+        uidTextView = (TextView) findViewById(R.id.uidTextView);
 
-        if(mAuth.getCurrentUser() != null) {
-            //user already signed in
-            Log.d("AUTH", mAuth.getCurrentUser().getEmail());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null ) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+            String uid = user.getUid();
+
+            nameTextView.setText(name);
+            emailTextView.setText(email);
+            uidTextView.setText(uid);
+
         } else {
-
-            startActivityForResult(AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setProviders(
-                            AuthUI.FACEBOOK_PROVIDER,
-                            AuthUI.GOOGLE_PROVIDER,
-                            AuthUI.EMAIL_PROVIDER)
-                    .build(), RC_SIGN_IN);
+            goToLoginScreen();
         }
 
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -120,44 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if(firebaseAuth.getCurrentUser() == null) {
-//                    Intent loginIntent = new Intent(MainActivity.this, IntroActivity.class);
-//                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(loginIntent);
-//                }
-//            }
-//        };
-
-//        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
-//        mDatabaseUsers.keepSynced(true);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                Log.d("AUTH", mAuth.getCurrentUser().getEmail());
-
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-
-            } else {
-                Log.d("AUTH", "NOT AUTHENTICATED");
-            }
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-//        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
@@ -207,16 +162,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void logout() {
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-//                Intent i = new Intent(MainActivity.this, IntroActivity.class);
-//                startActivity(i);
-                Log.d("AUTH", "USER LOGGED OUT");
-                finish();
-            }
-        });
+    private void goToLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        goToLoginScreen();
     }
 
 

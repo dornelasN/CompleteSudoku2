@@ -15,20 +15,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:weightSum="1"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/my_toolbar">
+        android:layout_alignParentStart="true">
 
-
-    <ImageView
-        android:layout_width="match_parent"
-        app:srcCompat="@drawable/logo_small"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/imageView"
-        android:layout_height="wrap_content" />
 
         <TextView
             android:text="@string/tv_newSudoku"
@@ -128,4 +118,32 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/uidTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UID"
+        android:textSize="14sp"
+        android:layout_below="@+id/emailTextView"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="56dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/emailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="16sp"
+        android:layout_below="@+id/nameTextView"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

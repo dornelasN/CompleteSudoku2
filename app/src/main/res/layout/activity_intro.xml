@@ -20,34 +20,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
 
-    <Button
-        android:text="@string/b_guest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/b_guest"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/b_login_intro"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/b_register_intro"
-        android:text="@string/b_register"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/iv_logo"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="48dp" />
-
-    <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/login_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginBottom="41dp" />-->
 
     <Button
         android:layout_width="wrap_content"
@@ -59,5 +31,24 @@
         android:layout_alignBaseline="@+id/b_register_intro"
         android:layout_alignBottom="@+id/b_register_intro"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/b_register_intro"
+        android:text="@string/b_register"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/iv_logo" />
+
+
+    <Button
+        android:text="@string/b_guest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/b_guest"
+        android:layout_below="@+id/b_login_intro"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
 
 </RelativeLayout>

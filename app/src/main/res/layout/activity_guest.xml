@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background2_image"
     tools:context="com.example.enkhturbadamsaikhan.completesudoku.GuestActivity">
 
     <LinearLayout
@@ -17,7 +18,8 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        >
 
         <ImageView
             android:layout_width="match_parent"
@@ -28,60 +30,83 @@
             android:id="@+id/iv_logo" />
 
         <TextView
-            android:text="@string/tv_newSudoku"
-            android:layout_width="match_parent"
+            android:id="@+id/singlePlayer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_newSudoku"
+            android:layout_gravity="center"
+            android:typeface="sans"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textAlignment="center" />
+            android:textColor="#000075"
+            android:text="Single Player" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_height="64dp">
 
-            <Button
+        <TextView
                 android:text="@string/easyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/easyButton_guest"
+                android:id="@+id/easy_level_text_guest"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:typeface="sans"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000075"
+                android:textAlignment="center"
                 android:layout_weight="1" />
 
-            <Button
+            <TextView
                 android:text="@string/mediumButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mediumButton_guest"
+                android:id="@+id/medium_level_text_guest"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:typeface="sans"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000075"
+                android:textAlignment="center"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="64dp">
+            android:layout_height="64dp"
+            >
 
-            <Button
+            <TextView
                 android:text="@string/hardButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/hardButton_guest"
+                android:id="@+id/hard_level_text_guest"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:typeface="sans"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000075"
+                android:textAlignment="center"
                 android:layout_weight="1" />
 
-            <Button
+            <TextView
                 android:text="@string/extremeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/extremeButton_guest"
+                android:id="@+id/extreme_level_text_guest"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:typeface="sans"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000075"
+                android:textAlignment="center"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>

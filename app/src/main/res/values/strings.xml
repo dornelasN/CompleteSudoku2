@@ -12,6 +12,8 @@
     <string name="b_guest">Play as a guest</string>
     <string name="b_register_login">Register</string>
     <string name="tv_newSudoku">New Sudoku</string>
+    <string name="fromCameraButton">Upload Puzzle</string>
+    <string name="fromSudokuGeneratorButton">Play a CompleteSudoku</string>
     <string name="easyButton">Easy</string>
     <string name="mediumButton">Medium</string>
     <string name="hardButton">Hard</string>
@@ -26,7 +28,8 @@
     <string name="b_upload_image">From  Image</string>
     <string name="b_upload_camera">From Camera</string>
     <string name="b_upload_upload">Upload</string>
-    
+
     <string name="facebook_application_id" translatable="false">995849827213662</string>
     <string name="fb_login_protocol_scheme">fb1172523412805682</string>
+    <string name="title_activity_game_origin_options">GameOriginOptionsActivity</string>
 </resources>

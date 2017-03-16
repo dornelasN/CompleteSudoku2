@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mProgress = new ProgressDialog(this);
+
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.lgnButton);
@@ -80,6 +83,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseUsers.keepSynced(true);
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -94,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.et_username_login);
         password = (EditText) findViewById(R.id.et_password_login);
 
-        login = (Button) findViewById(R.id.b_login);
+        login = (Button) findViewById(R.id.b_login) ;
 
         register = (TextView) findViewById(R.id.tv_redirect_register);
 
@@ -184,8 +190,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
 
                         mProgress.dismiss();
-
-                        checkUserExist();
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        //Now we can start MainActivity
+                          checkUserExist();
 
                     } else {
                         mProgress.dismiss();
@@ -195,6 +203,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+//        else if (TextUtils.isEmpty(email1)) {
+//            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+//        } else if (TextUtils.isEmpty(pass)) {
+//            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+//        }
     }
 
     private void checkUserExist() {
@@ -208,7 +221,9 @@ public class LoginActivity extends AppCompatActivity {
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 } else {
-                    Toast.makeText(LoginActivity.this, "You need to set up your account", Toast.LENGTH_LONG).show();
+                    Intent setupIntent = new Intent(LoginActivity.this, SetupActivity.class);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(setupIntent);
                 }
             }
 

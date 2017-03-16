@@ -2,9 +2,9 @@ package com.example.enkhturbadamsaikhan.completesudoku;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -74,7 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        //user successfully registered and signed in and will direct to MainActivity
 
+                        Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                         String user_id = mAuth.getCurrentUser().getUid();
 
                         DatabaseReference current_user_db = mDatabase.child(user_id);
@@ -90,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             });
+        } else {
+            Toast.makeText(RegisterActivity.this, "Couldn't register, please try again...", Toast.LENGTH_LONG).show();
         }
 
     }

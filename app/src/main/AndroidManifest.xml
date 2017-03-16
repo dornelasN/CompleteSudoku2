@@ -27,7 +27,7 @@
         <activity android:name=".GuestActivity" />
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".UploadActivity" />
-        <activity android:name=".SavedGamesActivity"></activity>
+        <activity android:name=".SavedGamesActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -47,6 +47,10 @@
         <activity
             android:name=".GameOriginOptionsActivity"
             android:label="@string/title_activity_game_origin_options"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UploadOptions"
+            android:label="@string/title_activity_upload_options"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

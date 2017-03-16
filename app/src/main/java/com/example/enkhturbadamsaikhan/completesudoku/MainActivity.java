@@ -188,6 +188,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkUserExist();
+    }
+
     private void checkUserExist() {
         final String user_id = mAuth.getCurrentUser().getUid();
 

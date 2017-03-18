@@ -29,7 +29,6 @@
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
         <activity android:name=".FacebookLoginActivity" />
-        <activity android:name=".SetupActivity"></activity>
     </application>
 
 </manifest>

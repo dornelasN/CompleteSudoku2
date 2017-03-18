@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        //email login
         mAuth = FirebaseAuth.getInstance();
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -191,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         mProgress.dismiss();
                         finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         //Now we can start MainActivity
                           checkUserExist();
 
@@ -220,10 +222,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
-                } else {
-                    Intent setupIntent = new Intent(LoginActivity.this, SetupActivity.class);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(setupIntent);
                 }
             }
 

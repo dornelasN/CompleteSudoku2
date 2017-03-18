@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //user in database
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseUsers.keepSynced(true);
 
+        //user in auth
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(user != null ) {
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        checkUserExist();
+        //checkUserExist();
     }
 
     private void checkUserExist() {
@@ -201,9 +204,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(user_id)) {
-                    Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(setupIntent);
+                    Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
                 }
             }
 

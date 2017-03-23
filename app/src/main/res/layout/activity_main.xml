@@ -134,9 +134,9 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="56dp"
+        android:text="Name"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:text="Name" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/emailTextView"

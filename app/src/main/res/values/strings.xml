@@ -23,7 +23,7 @@
     <string name="cancelButton">Cancel</string>
     <string name="tv_loadSudoku">Load Sudoku</string>
     <string name="tv_upload_title">Upload Puzzle</string>
-    <string name="b_upload_image">From  Image</string>
+    <string name="b_upload_image">From Image</string>
     <string name="b_upload_camera">From Camera</string>
     <string name="b_upload_upload">Upload</string>
 

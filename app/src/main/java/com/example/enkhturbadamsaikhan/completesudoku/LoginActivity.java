@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button login;
     private TextView register;
+    private TextView guest;
 
     private ProgressDialog mProgress;
 
@@ -121,6 +122,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+
+        guest = (TextView) findViewById(R.id.tv_guest_login);
+
+        guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, GuestActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override

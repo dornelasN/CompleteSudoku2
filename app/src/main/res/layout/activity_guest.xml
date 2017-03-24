@@ -48,7 +48,7 @@
             android:layout_marginTop="16dp">
 
             <TextView
-                android:text="@string/easyButton"
+                android:text="@string/tv_easy_mode"
                 android:id="@+id/easyButton_guest"
                 android:clickable="true"
                 android:layout_gravity="center"
@@ -60,7 +60,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:text="@string/mediumButton"
+                android:text="@string/tv_medium_mode"
                 android:clickable="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:text="@string/hardButton"
+                android:text="@string/tv_hard_mode"
                 android:clickable="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
@@ -84,7 +84,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:text="@string/extremeButton"
+                android:text="@string/tv_extreme_mode"
                 android:clickable="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"

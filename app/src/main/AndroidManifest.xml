@@ -27,6 +27,7 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
+        <activity android:name=".SinglePlayerActivity"></activity>
     </application>
 
 </manifest>

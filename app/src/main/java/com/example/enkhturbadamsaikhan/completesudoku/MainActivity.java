@@ -28,15 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView nameTextView;
     private TextView emailTextView;
-    private TextView uidTextView;
-
-    private Button easy;
-    private Button medium;
-    private Button hard;
-    private Button extreme;
-
-    private Button upload;
-    private Button saved;
+    //private TextView uidTextView;
+    private TextView singlePlayer;
+    private TextView multiplayer;
+    private TextView uploadPuzzle;
+    private TextView settings;
 
     private DatabaseReference mDatabaseUsers;
 
@@ -49,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
         emailTextView = (TextView) findViewById(R.id.emailTextView);
-        uidTextView = (TextView) findViewById(R.id.uidTextView);
+        //uidTextView = (TextView) findViewById(R.id.uidTextView);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -73,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         if(user != null ) {
             String name = user.getDisplayName();
             String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-            String uid = user.getUid();
+            //Uri photoUrl = user.getPhotoUrl();
+            //String uid = user.getUid();
 
             nameTextView.setText(name);
             emailTextView.setText(email);
-            uidTextView.setText(uid);
+            //uidTextView.setText(uid);
 
         } else {
             goToLoginScreen();
@@ -87,46 +83,30 @@ public class MainActivity extends AppCompatActivity {
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(myToolbar);
 
-        easy = (Button) findViewById(R.id.easyButton);
-        medium = (Button) findViewById(R.id.mediumButton);
-        hard = (Button) findViewById(R.id.hardButton);
-        extreme = (Button) findViewById(R.id.extremeButton);
-        upload =  (Button) findViewById(R.id.uploadButton);
-        saved = (Button) findViewById(R.id.savedSudokuButton);
+        singlePlayer = (TextView) findViewById(R.id.single_player);
+        multiplayer = (TextView) findViewById(R.id.multiplayer);
+        uploadPuzzle = (TextView) findViewById(R.id.tv_upload);
+        settings = (TextView) findViewById(R.id.settings);
 
-        easy.setOnClickListener(new View.OnClickListener() {
+        singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
+                Intent i = new Intent(MainActivity.this, SinglePlayerActivity.class);
                 startActivity(i);
             }
         });
 
-        medium.setOnClickListener(new View.OnClickListener() {
+        multiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
+//                startActivity(i);
+
+                Toast.makeText(MainActivity.this, "Create Multiplayer Activity", Toast.LENGTH_LONG).show();
             }
         });
 
-        hard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
-                startActivity(i);
-            }
-        });
-
-        extreme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
-                startActivity(i);
-            }
-        });
-
-        upload.setOnClickListener(new View.OnClickListener() {
+        uploadPuzzle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, UploadActivity.class);
@@ -134,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        saved.setOnClickListener(new View.OnClickListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SavedGamesActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
+//                startActivity(i);
+                Toast.makeText(MainActivity.this, "Create Settings Activity", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.example.enkhturbadamsaikhan.completesudoku;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView nameTextView;
     private TextView emailTextView;
     //private TextView uidTextView;
-    private TextView singlePlayer;
+    private TextView mSinglePlayer;
     private TextView multiplayer;
     private TextView uploadPuzzle;
     private TextView settings;
@@ -83,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(myToolbar);
 
-        singlePlayer = (TextView) findViewById(R.id.single_player);
+        mSinglePlayer = (TextView) findViewById(R.id.tv_single_player);
         multiplayer = (TextView) findViewById(R.id.multiplayer);
         uploadPuzzle = (TextView) findViewById(R.id.tv_upload);
         settings = (TextView) findViewById(R.id.settings);
 
-        singlePlayer.setOnClickListener(new View.OnClickListener() {
+        mSinglePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, SinglePlayerActivity.class);

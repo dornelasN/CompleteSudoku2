@@ -9,76 +9,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.enkhturbadamsaikhan.completesudoku.UploadActivity">
+    tools:context="com.example.enkhturbadamsaikhan.completesudoku.UploadActivity"
+    android:background="@drawable/background_image">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_upload_title"
-        android:text="@string/tv_upload_title"
-        android:textAllCaps="false"
-        android:textStyle="normal|bold"
-        android:textAlignment="center"
-        android:textSize="20sp"/>
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/tv_upload_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <Button
+        <ImageView
+            android:layout_height="175dp"
             android:layout_width="wrap_content"
+            android:src="@drawable/logo_small"
+            android:id="@+id/iv_logo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="@string/tv_upload_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/b_upload_image"
-            android:layout_weight="0.01"
-            android:text="@string/b_upload_image"/>
+            android:id="@+id/tv_upload"
+            android:textColor="#000075"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_below="@+id/iv_logo"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_difficulties"
+            android:orientation="vertical"
+            android:layout_below="@+id/tv_upload"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_weight="0.01"
-            android:text="@string/b_upload_camera"/>
-    </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp">
 
+            <TextView
+                android:text="@string/b_upload_camera"
+                android:id="@+id/tv_upload_from_camera"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/iv_upload_grid"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        >
+            <TextView
+                android:text="@string/b_upload_gallery"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_upload_from_gallery"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/b_upload_upload"
-            android:layout_weight="0.01"
-            android:text="@string/b_upload_upload"/>
+        </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/b_upload_cancel"
-            android:layout_weight="0.01"
-            android:text="@string/cancelButton"/>
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        app:srcCompat="@drawable/upload_sudoku1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/iv_upload_grid" />
+    </RelativeLayout>
 </RelativeLayout>

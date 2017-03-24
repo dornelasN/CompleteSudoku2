@@ -12,115 +12,130 @@
     tools:context="com.example.enkhturbadamsaikhan.completesudoku.LoginActivity"
     android:background="@drawable/background_image">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo_small"
-        android:id="@+id/iv_logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_login_email"
-        android:layout_below="@+id/iv_logo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Email" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/et_username_login"
-        android:inputType="text|textEmailAddress"
-        android:layout_below="@+id/tv_login_email"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_password_login"
-        android:text="@string/tv_password"
-        android:layout_below="@+id/et_username_login"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/et_password_login"
-        android:inputType="textPassword"
-        android:layout_below="@+id/tv_password_login"
-        android:layout_alignParentStart="true" />
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/b_login"
-        android:text="@string/b_login"
-        android:layout_gravity="right"
-        android:layout_below="@+id/et_password_login"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Not Registered?"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_not_registered"
-        android:textAlignment="center"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/b_login"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/not_registered_layout"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/tv_not_registered"
-        android:layout_alignParentStart="true">
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/logo_small"
+            android:id="@+id/iv_logo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
-            android:text="Register here!"
-            android:clickable="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_redirect_register"
+            android:id="@+id/tv_login_email"
+            android:layout_below="@+id/iv_logo"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textAlignment="center"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:layout_below="@+id/tv_not_registered"/>
+            android:text="@string/tv_email"
+            android:textColor="#000065"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/et_username_login"
+            android:inputType="text|textEmailAddress"
+            android:layout_below="@+id/tv_login_email"
+            android:layout_alignParentStart="true" />
 
         <TextView
-            android:text="Play as a Guest!"
-            android:clickable="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_guest_login"
+            android:id="@+id/tv_password_login"
+            android:text="@string/tv_password_register"
+            android:layout_below="@+id/et_username_login"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#000065"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/et_password_login"
+            android:inputType="textPassword"
+            android:layout_below="@+id/tv_password_login"
+            android:layout_alignParentStart="true" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/b_login"
+            android:text="@string/b_login"
+            android:layout_gravity="right"
+            android:layout_below="@+id/et_password_login"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#000065"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:text="Not Registered?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_not_registered"
             android:textAlignment="center"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:layout_below="@+id/tv_not_registered"/>
+            android:layout_below="@+id/b_login"
+            android:textColor="#000060"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/not_registered_layout"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@+id/tv_not_registered"
+            android:layout_alignParentStart="true">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/lgnButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/not_registered_layout"
-        android:layout_centerHorizontal="true" />
+            <TextView
+                android:text="Register here!"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_redirect_register"
+                android:layout_gravity="center"
+                android:layout_alignParentStart="true"
+                android:textAlignment="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/tv_not_registered"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:text="Play as a Guest!"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_guest_login"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/tv_not_registered"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/lgnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/not_registered_layout"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
 
 
 

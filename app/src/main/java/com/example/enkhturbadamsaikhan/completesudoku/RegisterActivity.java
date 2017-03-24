@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText username;
+    private Button cancel;
     private Button register;
     private EditText password;
 
@@ -45,8 +46,18 @@ public class RegisterActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.et_email_register);
         password = (EditText) findViewById(R.id.et_password_register);
 
-        register = (Button) findViewById(R.id.b_register);
+        cancel = (Button) findViewById(R.id.b_cancel);
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+
+        register = (Button) findViewById(R.id.b_register);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 

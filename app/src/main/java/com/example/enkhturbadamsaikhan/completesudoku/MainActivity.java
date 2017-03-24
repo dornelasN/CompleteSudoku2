@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         medium = (Button) findViewById(R.id.mediumButton);
         hard = (Button) findViewById(R.id.hardButton);
         extreme = (Button) findViewById(R.id.extremeButton);
-
         upload =  (Button) findViewById(R.id.uploadButton);
         saved = (Button) findViewById(R.id.savedSudokuButton);
 

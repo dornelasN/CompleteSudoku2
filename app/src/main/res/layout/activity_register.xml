@@ -8,75 +8,122 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.enkhturbadamsaikhan.completesudoku.RegisterActivity">
+    tools:context="com.example.enkhturbadamsaikhan.completesudoku.RegisterActivity"
+    android:background="@drawable/background_image">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_username"
-        android:text="@string/tv_username"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/et_username_register"
-        android:inputType="text"
-        android:layout_below="@+id/tv_username"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/logo_small"
+            android:id="@+id/iv_logo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_email_register"
-        android:text="@string/tv_email"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/et_username_register"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_username"
+            android:text="@string/tv_username"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/iv_logo"
+            android:textColor="#000075"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/et_username_register"
+            android:inputType="text"
+            android:layout_below="@+id/tv_username"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_email_register"
+            android:text="@string/tv_email"
+            android:layout_below="@+id/et_username_register"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#000075"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/et_email_register"
+            android:layout_below="@+id/tv_email_register"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_email_register"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/tv_password_register"
+            android:text="@string/tv_password_register"
+            android:textColor="#000075"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/tv_password_register"
+            android:id="@+id/et_password_register"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_password_register"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/b_register"
+                android:text="@string/b_register"
+                android:layout_below="@+id/et_password_register"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:backgroundTint="#000065"
+                android:textColor="#FFFFFF"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/b_cancel"
+                android:text="@string/b_cancel"
+                android:layout_below="@+id/et_password_register"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:backgroundTint="#000065"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
 
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/et_email_register"
-        android:layout_below="@+id/tv_email_register"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_email_register"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_password_register"
-        android:text="@string/tv_password_register"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/tv_password_register"
-        android:id="@+id/et_password_register"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/b_register"
-        android:text="@string/b_register"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/et_password_register"
-        android:layout_centerHorizontal="true"/>
-
+    </RelativeLayout>
 </RelativeLayout>

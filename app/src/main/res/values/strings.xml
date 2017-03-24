@@ -6,8 +6,8 @@
     <string name="tv_email">E-Mail:</string>
     <string name="b_login">Login</string>
     <string name="b_register">Register</string>
-    <string name="tv_password_register">Password</string>
-    <string name="tv_passwordRT_register">Retype Password</string>
+    <string name="b_cancel">Cancel</string>
+    <string name="tv_password_register">Password:</string>
     <string name="b_logout_main">Logout</string>
     <string name="b_guest">Play as a guest</string>
     <string name="b_register_login">Register</string>

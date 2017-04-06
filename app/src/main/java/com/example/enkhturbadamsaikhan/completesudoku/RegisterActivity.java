@@ -74,11 +74,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startRegister() {
         // Retrieve all the field
-        final String user = username.getText().toString();
-        String pass = password.getText().toString();
-        String email1 = email.getText().toString();
+        final String userName = username.getText().toString();
+        final String pass = password.getText().toString();
+        final String email1 = email.getText().toString();
 
-        if(!TextUtils.isEmpty(user) && !TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)) {
+        if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)) {
 
             mProgress.setMessage("Signing up...");
             mProgress.show();
@@ -94,7 +94,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                         DatabaseReference current_user_db = mDatabase.child(user_id);
 
-                        current_user_db.child("name").setValue(user);
+                        current_user_db.child("name").setValue(userName);
+                        current_user_db.child("e-mail").setValue(email1);
 
                         mProgress.dismiss();
 

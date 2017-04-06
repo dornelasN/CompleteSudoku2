@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             String name = user.getDisplayName();
             String email = user.getEmail();
             //Uri photoUrl = user.getPhotoUrl();
-            //String uid = user.getUid();
+            String uid = user.getUid();
 
             nameTextView.setText(name);
             emailTextView.setText(email);

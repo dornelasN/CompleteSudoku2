@@ -27,7 +27,12 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
-        <activity android:name=".SinglePlayerActivity"></activity>
+        <activity android:name=".SinglePlayerActivity" />
+        <activity
+            android:name=".MultiplayerActivity"
+            android:label="@string/title_activity_multiplayer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".InviteActivity"></activity>
     </application>
 
 </manifest>

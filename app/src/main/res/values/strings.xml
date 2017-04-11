@@ -10,15 +10,18 @@
     <string name="b_upload_camera">From Camera</string>
     <string name="b_upload_gallery">From Gallery</string>
     <string name="b_upload_upload">Upload</string>
-    <string name="cancelButton">Cancel</string>
     <string name="facebook_application_id" translatable="false">995849827213662</string>
     <string name="fb_login_protocol_scheme">fb1172523412805682</string>
     <string name="loadButton">Load</string>
     <string name="savedSudokuButton">Saved games</string>
+    <string name="tv_cancel">Cancel</string>
     <string name="tv_email">E-Mail:</string>
     <string name="tv_easy_mode">Easy</string>
     <string name="tv_extreme_mode">Extreme</string>
     <string name="tv_hard_mode">Hard</string>
+    <string name="tv_invite">Invite</string>
+    <string name="tv_invite_friends">Invite Friends</string>
+    <string name="tv_load">Load</string>
     <string name="tv_load_puzzle">Load Puzzle</string>
     <string name="tv_multiplayer">Multiplayer</string>
     <string name="tv_medium_mode">Medium</string>
@@ -27,7 +30,9 @@
     <string name="tv_password_register">Password:</string>
     <string name="tv_savedGames">Saved Games</string>
     <string name="tv_single_player">Single Player</string>
+    <string name="tv_upload_manually">Manually</string>
     <string name="tv_upload_title">Upload Puzzle</string>
     <string name="tv_username">Username:</string>
     <string name="uploadButton">Upload</string>
+    <string name="title_activity_multiplayer">MultiplayerActivity</string>
 </resources>

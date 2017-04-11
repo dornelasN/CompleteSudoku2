@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = (LoginButton) findViewById(R.id.lgnButton);
 
-        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile", "user_friends"));
 
         //mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 

@@ -4,9 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <provider android:authorities="com.facebook.app.FacebookContentProvider"
+    <provider
         android:name="com.facebook.FacebookContentProvider"
-        android:exported="true"/>
+        android:authorities="com.facebook.app.FacebookContentProvider"
+        android:exported="true" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +32,7 @@
         <activity android:name=".PlayGameActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
-        <activity android:name=".SinglePlayerActivity"></activity>
+        <activity android:name=".SinglePlayerActivity" />
     </application>
 
 </manifest>

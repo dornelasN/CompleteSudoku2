@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
             emailTextView.setText(email);
             //uidTextView.setText(uid);
 
+            String user_id = mAuth.getCurrentUser().getUid();
+
+            DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
+
+            current_user_db.child("name").setValue(name);
+            current_user_db.child("e-mail").setValue(email);
+
         } else {
             goToLoginScreen();
         }

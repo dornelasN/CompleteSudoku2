@@ -29,6 +29,11 @@
         <activity android:name=".SavedGamesActivity" />
         <activity android:name=".SinglePlayerActivity" />
         <activity android:name=".FacebookActivity"></activity>
+        <activity
+            android:name=".MultiplayerActivity"
+            android:label="@string/title_activity_multiplayer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".InviteActivity"></activity>
     </application>
 
 </manifest>

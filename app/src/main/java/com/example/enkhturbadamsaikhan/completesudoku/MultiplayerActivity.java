@@ -1,13 +1,16 @@
 package com.example.enkhturbadamsaikhan.completesudoku;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SinglePlayerActivity extends AppCompatActivity {
+public class MultiplayerActivity extends AppCompatActivity {
 
     private TextView easy;
     private TextView medium;
@@ -19,7 +22,9 @@ public class SinglePlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_player);
+        setContentView(R.layout.activity_multiplayer);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         easy = (TextView) findViewById(R.id.tv_easy_mode);
         medium = (TextView) findViewById(R.id.tv_medium_mode);
@@ -31,7 +36,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, PlayGameActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, InviteActivity.class);
                 startActivity(i);
             }
         });
@@ -39,7 +44,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         medium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, PlayGameActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, InviteActivity.class);
                 startActivity(i);
             }
         });
@@ -47,7 +52,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, PlayGameActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, InviteActivity.class);
                 startActivity(i);
             }
         });
@@ -55,7 +60,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         extreme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, PlayGameActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, InviteActivity.class);
                 startActivity(i);
             }
         });
@@ -63,9 +68,9 @@ public class SinglePlayerActivity extends AppCompatActivity {
         loadPuzzle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, SavedGamesActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, SavedGamesActivity.class);
                 startActivity(i);
-                //Toast.makeText(SinglePlayerActivity.this, "Create Loading Puzzle Activity", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MultiplayerActivity.this, "Create Loading Puzzle Activity", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -73,9 +78,11 @@ public class SinglePlayerActivity extends AppCompatActivity {
         uploadPuzzle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SinglePlayerActivity.this, UploadActivity.class);
+                Intent i = new Intent(MultiplayerActivity.this, UploadActivity.class);
                 startActivity(i);
             }
         });
+
+
     }
 }

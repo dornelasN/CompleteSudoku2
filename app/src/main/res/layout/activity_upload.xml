@@ -15,9 +15,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:layout_height="175dp"
@@ -43,10 +42,11 @@
         <LinearLayout
             android:id="@+id/layout_difficulties"
             android:orientation="vertical"
-            android:layout_below="@+id/tv_upload"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="19dp"
+            android:layout_below="@+id/tv_upload"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:text="@string/b_upload_camera"
@@ -64,10 +64,22 @@
                 android:text="@string/b_upload_gallery"
                 android:clickable="true"
                 android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_upload_from_gallery"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="@string/tv_upload_manually"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_upload_manually"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />

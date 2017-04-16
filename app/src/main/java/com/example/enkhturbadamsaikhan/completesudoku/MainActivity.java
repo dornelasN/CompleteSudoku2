@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
         multiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
-//                startActivity(i);
+                Intent i = new Intent(MainActivity.this, MultiplayerActivity.class);
+                startActivity(i);
 
-                Toast.makeText(MainActivity.this, "Create Multiplayer Activity", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "Create Multiplayer Activity", Toast.LENGTH_LONG).show();
             }
         });
 

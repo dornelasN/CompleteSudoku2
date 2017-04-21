@@ -20,12 +20,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//import static com.example.enkhturbadamsaikhan.completesudoku.R.id.emailTextView;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
 
     private TextView nameTextView;
-    //private TextView emailTextView;
+    private TextView mEmailTextView;
     //private TextView uidTextView;
     private TextView mSinglePlayer;
     private TextView multiplayer;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
-        //emailTextView = (TextView) findViewById(R.id.emailTextView);
+        mEmailTextView = (TextView) findViewById(R.id.emailTextView);
         //uidTextView = (TextView) findViewById(R.id.uidTextView);
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,13 +68,20 @@ public class MainActivity extends AppCompatActivity {
 
         if(user != null ) {
             String name = user.getDisplayName();
-            //String email = user.getEmail();
+            String email = user.getEmail();
             //Uri photoUrl = user.getPhotoUrl();
             String uid = user.getUid();
 
             nameTextView.setText(name);
-            //emailTextView.setText(email);
+            mEmailTextView.setText(email);
             //uidTextView.setText(uid);
+
+            String user_id = mAuth.getCurrentUser().getUid();
+
+            DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
+
+            current_user_db.child("name").setValue(name);
+            current_user_db.child("e-mail").setValue(email);
 
         } else {
             goToLoginScreen();

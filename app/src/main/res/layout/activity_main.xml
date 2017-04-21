@@ -90,11 +90,22 @@
             android:textSize="16sp"
             android:text="Name"
             android:textColor="#000075"
+            android:layout_marginBottom="18dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />
 
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/emailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="Email"
+        android:textColor="#000075"
+        android:textSize="16sp" />
 
 </RelativeLayout>

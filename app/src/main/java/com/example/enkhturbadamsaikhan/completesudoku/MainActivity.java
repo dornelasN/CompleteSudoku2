@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,26 +63,59 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseUsers.keepSynced(true);
 
         //user in auth
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null ) {
-            String name = user.getDisplayName();
+            //String name = user.getDisplayName();
             String email = user.getEmail();
             //Uri photoUrl = user.getPhotoUrl();
             //String uid = user.getUid();
 
-            nameTextView.setText(name);
-            emailTextView.setText(email);
+//             If the above were null, iterate the provider data
+//             and set with the first non null data
+            for (UserInfo userInfo : user.getProviderData()) {
+
+                String name = userInfo.getDisplayName();
+
+                // If displayName() is null this means that the user signed in using the email and password they created.
+                // This is the null issue we shouldn't get that we are gonna be solving below.
+
+                if (name == null) {
+                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Get the name the user signed-up with using dataSnapshot
+                            String nameOfCurrentUser = (String) dataSnapshot.child("Name").getValue();
+
+                            // Set username we retrieved using dataSnapshot to the view
+                            nameTextView.setText(nameOfCurrentUser);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                if (name != null) {
+                    nameTextView.setText(name);
+                }
+                emailTextView.setText(email);
+            } //for
+        } //if
+
+
+
             //uidTextView.setText(uid);
 
-            String user_id = mAuth.getCurrentUser().getUid();
+//            String user_id = mAuth.getCurrentUser().getUid();
+//
+//            DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
+//
+//            current_user_db.child("name").setValue(name);
+//            current_user_db.child("e-mail").setValue(email);
 
-            DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
-
-            current_user_db.child("name").setValue(name);
-            current_user_db.child("e-mail").setValue(email);
-
-        } else {
+        else {
             goToLoginScreen();
         }
 
@@ -179,7 +213,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //checkUserExist();
+
+        mAuth.addAuthStateListener(mAuthListener);
+
+        checkUserExist();
     }
 
     private void checkUserExist() {
@@ -202,12 +239,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void goToLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
+
+        //user won't be able to go back
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void logout() {
-        FirebaseAuth.getInstance().signOut();
+        mAuth.signOut();
         LoginManager.getInstance().logOut();
         goToLoginScreen();
     }

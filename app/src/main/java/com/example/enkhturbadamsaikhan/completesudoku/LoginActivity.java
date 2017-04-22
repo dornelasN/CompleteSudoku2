@@ -184,6 +184,21 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        Toast.makeText(getApplicationContext(), "Facebook signing in", Toast.LENGTH_LONG).show();
+                        //get current user
+                        //user in auth
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        String name = user.getDisplayName();
+                        String email = user.getEmail();
+
+                        //child created with user id
+                        DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
+
+                        current_user_db.child("Name").setValue(name);
+                        current_user_db.child("Email").setValue(email);
+
+
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -220,7 +235,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
 
                         mProgress.dismiss();
-                        finish();
+                        //finish();
                         //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         //Now we can start MainActivity
                           checkUserExist();

@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUsers;
 
     private ProgressDialog mProgress;
 
@@ -38,7 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseUsers.keepSynced(true);
 
         mProgress = new ProgressDialog(this);
 
@@ -63,10 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 startRegister();
 
             }
         });
+
+
 
 
     }
@@ -76,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Retrieve all the field
         final String user = username.getText().toString();
         String pass = password.getText().toString();
-        String email1 = email.getText().toString();
+        final String email1 = email.getText().toString();
 
         if(!TextUtils.isEmpty(user) && !TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)) {
 
@@ -90,11 +94,16 @@ public class RegisterActivity extends AppCompatActivity {
                         //user successfully registered and signed in and will direct to MainActivity
 
                         Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
+
+                        //current user's id
                         String user_id = mAuth.getCurrentUser().getUid();
 
-                        DatabaseReference current_user_db = mDatabase.child(user_id);
+                        //child created with user id
+                        DatabaseReference current_user_db = mDatabaseUsers.child(user_id);
 
-                        current_user_db.child("name").setValue(user);
+                        current_user_db.child("Name").setValue(user);
+                        current_user_db.child("Email").setValue(email1);
+
 
                         mProgress.dismiss();
 

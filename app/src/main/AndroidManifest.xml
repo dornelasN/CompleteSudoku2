@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <provider android:authorities="com.facebook.app.FacebookContentProvider"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,7 +32,6 @@
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
         <activity android:name=".SinglePlayerActivity" />
-        <activity android:name=".FacebookActivity"></activity>
         <activity
             android:name=".MultiplayerActivity"
             android:label="@string/title_activity_multiplayer"

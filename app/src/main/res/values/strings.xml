@@ -10,6 +10,7 @@
     <string name="b_upload_camera">From Camera</string>
     <string name="b_upload_gallery">From Gallery</string>
     <string name="b_upload_upload">Upload</string>
+    <string name="cancelButton">Cancel</string>
     <string name="facebook_application_id" translatable="false">995849827213662</string>
     <string name="fb_login_protocol_scheme">fb1172523412805682</string>
     <string name="loadButton">Load</string>

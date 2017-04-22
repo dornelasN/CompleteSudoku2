@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
 
     private TextView nameTextView;
-    private TextView mEmailTextView;
+    private TextView emailTextView;
     //private TextView uidTextView;
     private TextView mSinglePlayer;
     private TextView multiplayer;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
-        mEmailTextView = (TextView) findViewById(R.id.emailTextView);
+        emailTextView = (TextView) findViewById(R.id.emailTextView);
         //uidTextView = (TextView) findViewById(R.id.uidTextView);
 
         mAuth = FirebaseAuth.getInstance();
@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
             String name = user.getDisplayName();
             String email = user.getEmail();
             //Uri photoUrl = user.getPhotoUrl();
-            String uid = user.getUid();
+            //String uid = user.getUid();
 
             nameTextView.setText(name);
-            mEmailTextView.setText(email);
+            emailTextView.setText(email);
             //uidTextView.setText(uid);
 
             String user_id = mAuth.getCurrentUser().getUid();

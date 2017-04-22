@@ -58,10 +58,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabaseUsers;
 
+    private static final String TAG = "TAG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         mProgress = new ProgressDialog(this);
 

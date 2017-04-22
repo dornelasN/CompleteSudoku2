@@ -102,6 +102,13 @@ public class RegisterActivity extends AppCompatActivity {
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
 
+                    } else {
+                        mProgress.dismiss();
+                        if (task.getException() != null) {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Firebase registration error", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });

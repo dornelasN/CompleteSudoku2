@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Playing as guest", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "guest: onclick");
                 Intent i = new Intent(LoginActivity.this, GuestActivity.class);
                 startActivity(i);
@@ -179,8 +180,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // [START auth_with_facebook]
     private void handleFacebookAccessToken(AccessToken token) {
-//        progressBar.setVisibility(View.VISIBLE);
-//        loginButton.setVisibility(View.GONE);
+        mProgress.setMessage("Connecting to Facebook...");
+        mProgress.show();
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
@@ -192,16 +193,19 @@ public class LoginActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-
-                            Toast.makeText(getApplicationContext(), "firebase_error_login", Toast.LENGTH_LONG).show();
+                            if (task.getException() != null) {
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Firebase login error", Toast.LENGTH_LONG).show();
+                            }
                         }
-//                        progressBar.setVisibility(View.GONE);
-//                        loginButton.setVisibility(View.VISIBLE);
+                        mProgress.dismiss();
                     }
                 });
     }
 
     private void goToMainScreen() {
+        Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_LONG).show();
         Log.d(TAG, "goToMainScreen()");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -225,18 +229,18 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "signInWithEmailAndPassword: OnComplete");
+                    mProgress.dismiss();
                     if (task.isSuccessful()) {
-
-                        mProgress.dismiss();
                         finish();
-                        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         //Now we can start MainActivity
-                          checkUserExist();
+                        checkUserExist();
 
                     } else {
-                        mProgress.dismiss();
-
-                        Toast.makeText(LoginActivity.this, "Error login", Toast.LENGTH_LONG).show();
+                        if (task.getException() != null) {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Firbase login error", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });
@@ -257,6 +261,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange(DataSnapshot "+dataSnapshot.toString()+")");
                 if(dataSnapshot.hasChild(user_id)) {
+                    Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "dataSnapshot.hasChild("+user_id+")");
                     Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

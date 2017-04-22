@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.util.Log;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
 
     private DatabaseReference mDatabaseUsers;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    Log.d(TAG, "FirebaseUser user = "+firebaseAuth.getCurrentUser().getDisplayName());
                     goToMainScreen();
                 }
 
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "login: onclick");
                 checkLogin();
             }
         });
@@ -80,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "register: onclick");
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 registerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(registerIntent);
@@ -91,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "guest: onclick");
                 Intent i = new Intent(LoginActivity.this, GuestActivity.class);
                 startActivity(i);
             }
@@ -100,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void goToMainScreen() {
+        Log.d(TAG, "goToMainScreen()");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -107,18 +115,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void checkLogin() {
-
+        Log.d(TAG, "checkLogin()");
         String pass = password.getText().toString();
         String email1 = email.getText().toString();
 
         if(!TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)) {
-
+            Log.d(TAG, "(!TextUtils.isEmpty("+email1+") && !TextUtils.isEmpty("+pass+"))");
             mProgress.setMessage("Checking Login...");
             mProgress.show();
 
             mAuth.signInWithEmailAndPassword(email1, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d(TAG, "signInWithEmailAndPassword: OnComplete");
                     if (task.isSuccessful()) {
 
                         mProgress.dismiss();
@@ -143,12 +152,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkUserExist() {
+        Log.d(TAG, "checkUserExist()");
         final String user_id = mAuth.getCurrentUser().getUid();
 
         mDatabaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange(DataSnapshot "+dataSnapshot.toString()+")");
                 if(dataSnapshot.hasChild(user_id)) {
+                    Log.d(TAG, "dataSnapshot.hasChild("+user_id+")");
                     Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
@@ -157,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, "onCancelled("+databaseError.getMessage()+")");
             }
         });
     }
@@ -166,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        Log.d(TAG, "onStart()");
     }
 
     @Override

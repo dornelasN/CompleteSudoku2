@@ -37,6 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
+import org.opencv.android.OpenCVLoader;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginButton;
@@ -59,7 +61,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabaseUsers;
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "LoginActivity";
+
+    public native String stringFromJNI();
+
+    // Used to load the 'native-lib' library on application startup.
+    static {
+        System.loadLibrary("native-lib");
+
+        if(!OpenCVLoader.initDebug()){
+            Log.d(TAG, "OpenCV not loaded");
+        } else {
+            Log.d(TAG, "OpenCV loaded");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        // Example of a call to a native method
+        String text = "";
+        text += stringFromJNI();
+        Log.d(TAG, text);
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

@@ -3,6 +3,10 @@
     package="com.example.enkhturbadamsaikhan.completesudoku">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="READ_EXTERNAL_STORAGE" />
+
 
     <provider android:authorities="com.facebook.app.FacebookContentProvider"
         android:name="com.facebook.FacebookContentProvider"
@@ -37,6 +41,26 @@
             android:label="@string/title_activity_multiplayer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InviteActivity"></activity>
+
+        <activity android:name=".MainActivityGallery">
+            <intent-filter>
+
+
+
+                    <action android:name="android.intent.action.SEND_MULTIPLE" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <data android:mimeType="image/*" />
+                </intent-filter>
+
+
+
+
+        </activity>
+
+
+
+
+
     </application>
 
 </manifest>

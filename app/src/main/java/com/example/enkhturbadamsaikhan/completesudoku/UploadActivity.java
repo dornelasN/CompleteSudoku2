@@ -18,6 +18,7 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
+
         cameraUpload = (TextView) findViewById(R.id.tv_upload_from_camera);
         galleryUpload = (TextView) findViewById(R.id.tv_upload_from_gallery);
 
@@ -33,9 +34,24 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //open gallery
-                Toast.makeText(UploadActivity.this, "Open Gallery", Toast.LENGTH_LONG).show();
+                //Toast.makeText(UploadActivity.this, "Open Gallery", Toast.LENGTH_LONG).show();
+
+                gotoGallery();
+
+
+
 
             }
         });
+
     }
+
+    private void gotoGallery() {
+
+        Intent intent = new Intent(this, MainActivityGallery.class);
+
+        startActivity(intent);
+
+    }
+
 }

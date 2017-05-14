@@ -26,7 +26,8 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //open camera
-                Toast.makeText(UploadActivity.this, "Open Camera", Toast.LENGTH_LONG).show();
+                //Toast.makeText(UploadActivity.this, "Open Camera", Toast.LENGTH_LONG).show();
+                gotoCamera();
             }
         });
 
@@ -46,12 +47,14 @@ public class UploadActivity extends AppCompatActivity {
 
     }
 
-    private void gotoGallery() {
-
-        Intent intent = new Intent(this, MainActivityGallery.class);
-
+    private void gotoCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
+    }
 
+    private void gotoGallery() {
+        Intent intent = new Intent(this, MainActivityGallery.class);
+        startActivity(intent);
     }
 
 }

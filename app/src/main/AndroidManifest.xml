@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
     <provider android:authorities="com.facebook.app.FacebookContentProvider"
@@ -44,19 +44,19 @@
 
         <activity android:name=".MainActivityGallery">
             <intent-filter>
-
-
-
                     <action android:name="android.intent.action.SEND_MULTIPLE" />
                     <category android:name="android.intent.category.DEFAULT" />
                     <data android:mimeType="image/*" />
                 </intent-filter>
-
-
-
-
         </activity>
-
+        <activity
+            android:name=".CameraActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label=".TestActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".Edit_Sudoku_Activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
 
 
 

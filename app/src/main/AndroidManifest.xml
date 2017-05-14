@@ -52,15 +52,20 @@
         <activity
             android:name=".CameraActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label=".TestActivity"
-            android:screenOrientation="landscape"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            android:screenOrientation="landscape">
+        </activity>
         <activity android:name=".Edit_Sudoku_Activity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
-
-
-
-
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.david.testsudoku.GameActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.example.david.testsudoku.GameSettingsActivity"
+            android:label="@string/game_settings">
+        </activity>
     </application>
 
 </manifest>

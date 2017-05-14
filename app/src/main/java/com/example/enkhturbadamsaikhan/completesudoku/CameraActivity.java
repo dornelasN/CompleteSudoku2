@@ -98,14 +98,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnTouchLis
         myLayout.addView(mOpenCvCameraView);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        Runnable runnable = new Runnable() {
-            public void run() {
-                //mnist = new DigitRecognizer("train-images.idx3-ubyte", "train-labels.idx1-ubyte", getApplicationContext());
-                Log.d(TAG, "Digit recognizer created");
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
     }
 
     @Override

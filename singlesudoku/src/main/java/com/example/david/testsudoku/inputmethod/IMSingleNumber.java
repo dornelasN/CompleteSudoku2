@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v4.widget.TextViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -140,18 +141,35 @@ public class IMSingleNumber extends InputMethod {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             mSelectedNumber = (Integer) view.getTag();
+
             update();
-            return true;
+            return false;
         }
     };
 
-	private OnClickListener mNumberButtonClicked = new OnClickListener() {
+	private View.OnClickListener mNumberButtonClicked = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 			mSelectedNumber = (Integer) v.getTag();
+			if (firstTouch && (System.currentTimeMillis() - time) <= DOUBLE_CLICK_TIME_DELTA) {
+				Log.d("** DOUBLE TAP**"," second tap ");
+				switch (mEditMode) {
+					case MODE_EDIT_NOTE:
+						sudokuGame.setHighlightedPossibilityAction(mSelectedNumber);
+						break;
+					case MODE_EDIT_VALUE:
+						sudokuGame.setHighlightedValueAction(mSelectedNumber);
+						break;
+				}
+				firstTouch = false;
 
-			update();
+			} else {
+				Log.d("** SINGLE  TAP**"," First Tap time  "+time);
+				firstTouch = true;
+				time = System.currentTimeMillis();
+
+			}
 		}
 	};
 
@@ -241,31 +259,13 @@ public class IMSingleNumber extends InputMethod {
 	protected void onCellTapped(CellTile cell) {
 		int selNumber = mSelectedNumber;
 
-		if (cell != null) {
-			//set cell value/possibilities
-			if (firstTouch && (System.currentTimeMillis() - time) <= DOUBLE_CLICK_TIME_DELTA) {
-				switch (mEditMode) {
-					case MODE_EDIT_NOTE:
-						sudokuGame.setHighlightedPossibilityAction(selNumber);
-						break;
-					case MODE_EDIT_VALUE:
-						sudokuGame.setHighlightedValueAction(selNumber);
-						break;
-				}
-				firstTouch = false;
-
-			} else {
-				firstTouch = true;
-				time = System.currentTimeMillis();
-				switch (mEditMode) {
-					case MODE_EDIT_NOTE:
-						sudokuGame.setPossibleAction(cell.getRow(), cell.getCol(), selNumber);
-						break;
-					case MODE_EDIT_VALUE:
-						sudokuGame.setValueAction(cell.getRow(), cell.getCol(), selNumber);
-						break;
-				}
-			}
+		switch (mEditMode) {
+			case MODE_EDIT_NOTE:
+				sudokuGame.setPossibleAction(cell.getRow(), cell.getCol(), selNumber);
+				break;
+			case MODE_EDIT_VALUE:
+				sudokuGame.setValueAction(cell.getRow(), cell.getCol(), selNumber);
+				break;
 		}
 
 	}

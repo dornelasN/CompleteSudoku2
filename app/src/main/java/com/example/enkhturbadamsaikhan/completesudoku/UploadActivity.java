@@ -1,17 +1,26 @@
 package com.example.enkhturbadamsaikhan.completesudoku;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 public class UploadActivity extends AppCompatActivity {
 
 
     private TextView cameraUpload;
     private TextView galleryUpload;
+    private int PICK_IMAGE_REQUEST = 1;
+    private static final String TAG = "UploadActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +34,6 @@ public class UploadActivity extends AppCompatActivity {
         cameraUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //open camera
-                //Toast.makeText(UploadActivity.this, "Open Camera", Toast.LENGTH_LONG).show();
                 gotoCamera();
             }
         });
@@ -34,14 +41,7 @@ public class UploadActivity extends AppCompatActivity {
         galleryUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //open gallery
-                //Toast.makeText(UploadActivity.this, "Open Gallery", Toast.LENGTH_LONG).show();
-
                 gotoGallery();
-
-
-
-
             }
         });
 

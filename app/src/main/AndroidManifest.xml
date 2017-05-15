@@ -32,7 +32,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".GuestActivity" />
-        <activity android:name=".PlayGameActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".SavedGamesActivity" />
         <activity android:name=".SinglePlayerActivity" />
@@ -52,7 +51,6 @@
         <activity
             android:name=".CameraActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             android:screenOrientation="landscape">
         </activity>
         <activity android:name=".Edit_Sudoku_Activity"

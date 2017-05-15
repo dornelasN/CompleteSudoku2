@@ -75,7 +75,8 @@
     <string name="help_text"><b>Hints</b>\n\nHints that guide you through the application controls will
         be shown the first time you encounter them. You can disable these hints in the game settings.
         Disabling then re-enabling hints will reset them\n\n<b>Highlighting</b>\n\nYou can highlight
-        or unhighlight a cell by double tapping
+        or unhighlight a cell by double tapping. You can highlight or unhighlight all instances of a
+        number at once by double tapping the numeric input button while in Numpad or Single Number mode.
         it\n\n<b>Actions</b>\n\nThe actions tab in the menu gives you several actions to help you solve the puzzle.
         Be warned that using these actions may reduce your final score.\n\n<b>Input modes</b>\n\nYou
         can switch between several input modes using button in the lower right corner of the screen.

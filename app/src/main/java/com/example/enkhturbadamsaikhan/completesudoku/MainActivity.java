@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.david.testsudoku.GameSettingsActivity;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -124,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, PlayGameActivity.class);
-//                startActivity(i);
+                Intent i = new Intent(MainActivity.this, GameSettingsActivity.class);
+                startActivity(i);
                 Toast.makeText(MainActivity.this, "Create Settings Activity", Toast.LENGTH_LONG).show();
             }
         });

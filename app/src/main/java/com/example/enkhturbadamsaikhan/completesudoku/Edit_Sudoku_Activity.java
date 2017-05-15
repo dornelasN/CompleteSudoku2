@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -302,5 +303,15 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
         sb.append(" -----------------------").append("\n");
 
         return sb.toString();
+    }
+
+    static {
+        //System.loadLibrary("native-lib");
+
+        if(!OpenCVLoader.initDebug()){
+            Log.d(TAG, "OpenCV not loaded");
+        } else {
+            Log.d(TAG, "OpenCV loaded");
+        }
     }
 }

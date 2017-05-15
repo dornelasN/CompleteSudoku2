@@ -90,6 +90,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnTouchLis
 
         setContentView(R.layout.camera_view);
 
+        getSupportActionBar().hide();
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         mOpenCvCameraView = new JavaCameraView(this, 0);
         mOpenCvCameraView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

@@ -95,19 +95,6 @@
             android:layout_below="@id/tv_hard_mode"/>
 
         <TextView
-            android:id="@+id/tv_load_game"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:typeface="sans"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:textColor="#000075"
-            android:text="@string/tv_load_puzzle"
-            android:layout_below="@id/tv_extreme_mode"/>
-
-        <TextView
             android:id="@+id/tv_load_puzzle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

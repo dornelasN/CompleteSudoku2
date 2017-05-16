@@ -71,6 +71,8 @@ public class SudokuGame {
         this.answers = answers;
         this.errors = errors;
         this.hints = hints;
+        this.undo = new ArrayDeque<>();
+        this.redo = new ArrayDeque<>();
 
         this.onChangeListeners = new ArrayList<>();
         this.length = sudoku.getLength();

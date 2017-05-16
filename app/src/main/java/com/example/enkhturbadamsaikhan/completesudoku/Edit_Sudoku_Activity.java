@@ -4,12 +4,25 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.david.completesudoku.Sudoku;
+import com.david.completesudoku.SudokuGame;
+import com.david.completesudoku.SudokuModel;
+import com.david.completesudoku.SudokuSolver;
+import com.example.david.testsudoku.DataResult;
+import com.example.david.testsudoku.GameActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -23,6 +36,7 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.photo.Photo;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -32,6 +46,12 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
 
     private int[][] array;
     private TessOCR mOCR;
+
+    private Handler saveHandler;
+    public static final int SAVE_SUCCESS = 0;
+    public static final int SAVE_FAILURE = 1;
+
+    private SaveGame sudokuGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +68,24 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
 
         Bitmap bitMap = Bitmap.createBitmap(img.cols(), img.rows(),Bitmap.Config.RGB_565);
         Utils.matToBitmap(img, bitMap);
+
+        //prepare handler
+        saveHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                if (msg.what == SAVE_SUCCESS){
+                    Toast toast = Toast.makeText(Edit_Sudoku_Activity.this, String.format(getString(com.example.david.testsudoku.R.string.save_success),
+                            sudokuGame.getName()), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                } else if (msg.what == SAVE_FAILURE) {
+                    Toast toast = Toast.makeText(Edit_Sudoku_Activity.this, String.format(getString(com.example.david.testsudoku.R.string.save_failure),
+                            sudokuGame.getName()), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }
+        };
 
         // find the imageview and draw it!
         ImageView iv = (ImageView) findViewById(R.id.imageView);
@@ -211,53 +249,40 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
             return n;
         }
 
-        private Mat CalcBlockMeanVariance (Mat Img, int blockSide) {
-            Mat I = new Mat();
-            Mat ResMat;
-            Mat inpaintmask = new Mat();
-            Mat patch;
-            Mat smallImg = new Mat();
-            MatOfDouble mean = new MatOfDouble();
-            MatOfDouble stddev = new MatOfDouble();
-
-            Img.convertTo(I, CvType.CV_32FC1);
-            ResMat = Mat.zeros(Img.rows() / blockSide, Img.cols() / blockSide, CvType.CV_32FC1);
-
-            for (int i = 0; i < Img.rows() - blockSide; i += blockSide)
-            {
-                for (int j = 0; j < Img.cols() - blockSide; j += blockSide)
-                {
-                    patch = new Mat(I,new Rect(j,i, blockSide, blockSide));
-                    Core.meanStdDev(patch, mean, stddev);
-
-                    if (stddev.get(0,0)[0] > 0.01)
-                        ResMat.put(i / blockSide, j / blockSide, mean.get(0,0)[0]);
-                    else
-                        ResMat.put(i / blockSide, j / blockSide, 0);
-                }
-            }
-
-            Imgproc.resize(I, smallImg, ResMat.size());
-            Imgproc.threshold(ResMat, inpaintmask, 0.02, 1.0, Imgproc.THRESH_BINARY);
-
-            Mat inpainted = new Mat();
-            Imgproc.cvtColor(smallImg, smallImg, Imgproc.COLOR_RGBA2BGR);
-            smallImg.convertTo(smallImg, CvType.CV_8UC1, 255.0);
-
-            inpaintmask.convertTo(inpaintmask, CvType.CV_8UC1);
-            Photo.inpaint(smallImg, inpaintmask, inpainted, 5, Photo.INPAINT_TELEA);
-
-            Imgproc.resize(inpainted, ResMat, Img.size());
-            ResMat.convertTo(ResMat, CvType.CV_32FC1, 1.0 / 255.0);
-
-            return ResMat;
-        }
 
         @Override
         protected void onPostExecute(Bitmap result) {
             // execution of result of Long time consuming operation
             ImageView iv = (ImageView) findViewById(R.id.imageView);
             iv.setImageBitmap(result);
+
+            TextView difficulty = (TextView) findViewById(R.id.difficulty_view);
+            Sudoku sudoku = new Sudoku(array);
+            SudokuSolver s = new SudokuSolver(sudoku);
+            if (s.solve()) {
+                difficulty.setText(s.getDifficulty());
+
+                SudokuGame sudokuGame = new SudokuGame(sudoku);
+                sudokuGame.setDifficulty(s.getDifficulty());
+                DataResult.getInstance().setSudokuGame(sudokuGame);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    SudokuModel sudokuModel = new FirebaseModel("/Users/" + user.getUid());
+                    DataResult.getInstance().setSudokuModel(sudokuModel);
+                    sudokuGame.setName("Captured Image");
+                    try {
+                        sudokuModel.saveGame(sudokuGame, saveHandler);
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                        saveHandler.sendEmptyMessage(SAVE_FAILURE);
+                    }
+                } else {
+                    Toast toast = Toast.makeText(Edit_Sudoku_Activity.this, R.string.not_logged_in, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } else {
+                difficulty.setText("No Solution");
+            }
             progressDialog.dismiss();
 
         }

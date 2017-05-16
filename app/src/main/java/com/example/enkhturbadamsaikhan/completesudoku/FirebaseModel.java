@@ -48,7 +48,7 @@ public class FirebaseModel implements SudokuModel {
         this.ref = ref;
     }
 
-    private SaveGame createSaveGame(SudokuGame sg) {
+    public static SaveGame createSaveGame(SudokuGame sg) {
         SaveGame game = new SaveGame();
 
         Sudoku sudoku = sg.getSudoku();
@@ -99,7 +99,7 @@ public class FirebaseModel implements SudokuModel {
         return game;
     }
 
-    private List<Map<String, Map<String, String>>> getListFromActions(Deque<ActionPair> stack) {
+    private static List<Map<String, Map<String, String>>> getListFromActions(Deque<ActionPair> stack) {
         List<Map<String, Map<String, String>>> map = new ArrayList<>();
         Iterator<ActionPair> it = stack.iterator();
         while (it.hasNext()) {
@@ -114,7 +114,7 @@ public class FirebaseModel implements SudokuModel {
         return map;
     }
 
-    private Map<String, String> getMapFromAction(Action action) {
+    private static Map<String, String> getMapFromAction(Action action) {
         Map<String, String> map = new HashMap<>();
         if (action instanceof SetCellAction) {
             SetCellAction a = (SetCellAction)action;
@@ -153,7 +153,7 @@ public class FirebaseModel implements SudokuModel {
         return map;
     }
 
-    private SudokuGame createSudokuGame(SaveGame sg) {
+    public static SudokuGame createSudokuGame(SaveGame sg) {
         int length = (int)Math.sqrt(sg.getValue().size());
         List<Integer> a = sg.getValue();
         int[] value = new int[a.size()];
@@ -178,12 +178,16 @@ public class FirebaseModel implements SudokuModel {
         SudokuGame game = new SudokuGame(new Sudoku(value, given, possible),
                 highlighted, sg.getCurrentTime(), sg.getElapsed(), sg.getName(),
                 sg.getDifficulty(), sg.getStatus(), sg.getScore(), answers, errors, hints);
-        game.setUndo(getActionsFromList(sg.getUndo(), game));
-        game.setRedo(getActionsFromList(sg.getRedo(), game));
+        if (sg.getUndo() != null) {
+            game.setUndo(getActionsFromList(sg.getUndo(), game));
+        }
+        if (sg.getRedo() != null) {
+            game.setRedo(getActionsFromList(sg.getRedo(), game));
+        }
         return game;
     }
 
-    private Deque<ActionPair> getActionsFromList(List<Map<String, Map<String, String>>> list, SudokuGame game) {
+    private static Deque<ActionPair> getActionsFromList(List<Map<String, Map<String, String>>> list, SudokuGame game) {
         Deque<ActionPair> stack = new ArrayDeque<>();
         Iterator<Map<String, Map<String, String>>> it = list.iterator();
         while (it.hasNext()) {
@@ -195,7 +199,7 @@ public class FirebaseModel implements SudokuModel {
         return stack;
     }
 
-    private Action getActionFromMap(Map<String, String> map, SudokuGame game) {
+    private static Action getActionFromMap(Map<String, String> map, SudokuGame game) {
         Action a = null;
         String name = map.get("name");
         if (name.equals("SetCellAction")) {
@@ -235,7 +239,7 @@ public class FirebaseModel implements SudokuModel {
         return a;
     }
 
-    private String boolArray2String(boolean[] array) {
+    private static String boolArray2String(boolean[] array) {
         BitSet bs = new BitSet(array.length);
         for (int i = 0; i < array.length; i++) {
             if (array[i]) {
@@ -245,7 +249,7 @@ public class FirebaseModel implements SudokuModel {
         return Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT);
     }
 
-    private String bool2dArray2String(boolean[][] array) {
+    private static String bool2dArray2String(boolean[][] array) {
         BitSet bs = new BitSet(array.length*array[0].length);
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
@@ -257,7 +261,7 @@ public class FirebaseModel implements SudokuModel {
         return Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT);
     }
 
-    private boolean[] string2BoolArray(String string, int length) {
+    private static boolean[] string2BoolArray(String string, int length) {
         BitSet bs = BitSet.valueOf(Base64.decode(string, Base64.DEFAULT));
         boolean[] array = new boolean[length];
         for (int i = 0; i < length; i++) {
@@ -268,7 +272,7 @@ public class FirebaseModel implements SudokuModel {
         return array;
     }
 
-    private boolean[][] string2Bool2dArray(String string, int length, int length2) {
+    private static boolean[][] string2Bool2dArray(String string, int length, int length2) {
         BitSet bs = BitSet.valueOf(Base64.decode(string, Base64.DEFAULT));
         boolean[][] array = new boolean[length][length2];
         for (int i = 0; i < length; i++) {

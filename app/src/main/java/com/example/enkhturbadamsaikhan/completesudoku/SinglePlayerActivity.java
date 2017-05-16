@@ -14,6 +14,8 @@ import com.david.completesudoku.SudokuGenerator;
 import com.example.david.testsudoku.DataResult;
 import com.example.david.testsudoku.GameActivity;
 import com.example.david.testsudoku.TestModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -96,9 +98,17 @@ public class SinglePlayerActivity extends AppCompatActivity {
     }
 
     private void startGame(String difficulty) {
-        DataResult.getInstance().setSudokuGame(new SudokuGame(sudokuGenerator.getSudoku(difficulty)));
-        DataResult.getInstance().setSudokuModel(new TestModel());
-        Intent intent = new Intent(SinglePlayerActivity.this, GameActivity.class);
-        startActivity(intent);
+        SudokuGame sudokuGame = new SudokuGame(sudokuGenerator.getSudoku(difficulty));
+        sudokuGame.setDifficulty(difficulty);
+        DataResult.getInstance().setSudokuGame(sudokuGame);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DataResult.getInstance().setSudokuModel(new FirebaseModel("/Users/"+user.getUid()));
+            Intent intent = new Intent(SinglePlayerActivity.this, GameActivity.class);
+            startActivity(intent);
+        } else {
+            Toast toast = Toast.makeText(this, R.string.not_logged_in, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

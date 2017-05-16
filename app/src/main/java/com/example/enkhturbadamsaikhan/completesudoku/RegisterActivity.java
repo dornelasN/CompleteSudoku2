@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,11 +27,14 @@ public class RegisterActivity extends AppCompatActivity {
     private Button cancel;
     private Button register;
     private EditText password;
+    private EditText reenter;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     private ProgressDialog mProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +42,31 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user!=null){
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(username.getText().toString()).build();
+                    user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(mainIntent);
+                        }
+                    });
+                }
+            }
+        };
 
         mProgress = new ProgressDialog(this);
 
         username = (EditText) findViewById(R.id.et_username_register);
         email = (EditText) findViewById(R.id.et_email_register);
         password = (EditText) findViewById(R.id.et_password_register);
+        reenter = (EditText) findViewById(R.id.et_password_reenter);
 
         cancel = (Button) findViewById(R.id.b_cancel);
 
@@ -71,14 +93,29 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if(mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
     private void startRegister() {
         // Retrieve all the field
-        final String user = username.getText().toString();
+        final String userName = username.getText().toString();
         String pass = password.getText().toString();
         String email1 = email.getText().toString();
+        String reen = reenter.getText().toString();
 
-        if(!TextUtils.isEmpty(user) && !TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)) {
+        if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(email1) && !TextUtils.isEmpty(pass)
+                && !TextUtils.isEmpty(reen) && reen.equals(pass)) {
 
             mProgress.setMessage("Signing up...");
             mProgress.show();
@@ -90,17 +127,8 @@ public class RegisterActivity extends AppCompatActivity {
                         //user successfully registered and signed in and will direct to MainActivity
 
                         Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
-                        String user_id = mAuth.getCurrentUser().getUid();
-
-                        DatabaseReference current_user_db = mDatabase.child(user_id);
-
-                        current_user_db.child("name").setValue(user);
 
                         mProgress.dismiss();
-
-                        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainIntent);
 
                     } else {
                         mProgress.dismiss();

@@ -18,11 +18,7 @@ public class TestModel implements SudokuModel {
                     if (new Random(System.currentTimeMillis()).nextBoolean()) {
                         throw new Exception();
                     }
-                    if (sudokuGame.getStatus().equals(SudokuGame.COMPLETED)) {
-                        saveHandler.sendEmptyMessage(GameActivity.SAVE_AND_QUIT);
-                    } else {
-                        saveHandler.sendEmptyMessage(GameActivity.SAVE_SUCCESS);
-                    }
+                    saveHandler.sendEmptyMessage(GameActivity.SAVE_SUCCESS);
                 } catch (Exception e) {
                     saveHandler.sendEmptyMessage(GameActivity.SAVE_FAILURE);
                 }

@@ -36,4 +36,6 @@
     <string name="tv_username">Username:</string>
     <string name="uploadButton">Upload</string>
     <string name="title_activity_multiplayer">MultiplayerActivity</string>
+    <string name="tv_password_reenter">Re-enter Password:</string>
+    <string name="not_logged_in">You are not logged in</string>
 </resources>

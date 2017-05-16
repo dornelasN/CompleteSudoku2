@@ -83,11 +83,16 @@ public class MainActivityGallery extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 Log.d(TAG, String.valueOf(bitmap));
-
-                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                imageView.setImageBitmap(bitmap);
                 int width = bitmap.getWidth();
                 int height = bitmap.getHeight();
+                Mat pic = new Mat();
+                Utils.bitmapToMat(bitmap, pic);
+                Imgproc.resize(pic, pic, new Size(width/2, height/2));
+                Utils.matToBitmap(pic, bitmap);
+                pic.release();
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setImageBitmap(bitmap);
+                Log.d(TAG, "width: "+width+" height"+height);
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width,height);
                 imageView.setLayoutParams(params);
                 AsyncTaskRunner proc = new AsyncTaskRunner();
@@ -299,14 +304,15 @@ public class MainActivityGallery extends AppCompatActivity {
         @Override
         protected void onPostExecute(Mat result) {
             // execution of result of Long time consuming operation
+            progressDialog.dismiss();
             if (result == null) {
                 Toast.makeText(MainActivityGallery.this, "No puzzle detected", Toast.LENGTH_LONG).show();
+            } else {
+                long addr = result.getNativeObjAddr();
+                Intent intent = new Intent(MainActivityGallery.this, Edit_Sudoku_Activity.class);
+                intent.putExtra("myImg", addr);
+                startActivity(intent);
             }
-            progressDialog.dismiss();
-            long addr = result.getNativeObjAddr();
-            Intent intent = new Intent(MainActivityGallery.this, Edit_Sudoku_Activity.class);
-            intent.putExtra( "myImg", addr );
-            startActivity( intent );
         }
 
 

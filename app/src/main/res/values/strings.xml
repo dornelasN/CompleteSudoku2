@@ -23,7 +23,7 @@
     <string name="tv_invite">Invite</string>
     <string name="tv_invite_friends">Invite Friends</string>
     <string name="tv_load">Load</string>
-    <string name="tv_load_puzzle">Load Puzzle</string>
+    <string name="tv_load_puzzle">Saved Puzzles</string>
     <string name="tv_multiplayer">Multiplayer</string>
     <string name="tv_medium_mode">Medium</string>
     <string name="tv_new_puzzle">New Puzzle</string>

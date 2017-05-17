@@ -45,10 +45,10 @@
         android:layout_marginLeft="1dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bt_retake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
+        android:text="Retake"
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="1dp"
         android:layout_marginTop="16dp"
@@ -56,4 +56,16 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/textView"
         android:layout_marginLeft="1dp" />
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/bt_retake"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/bt_retake"
+        android:layout_marginLeft="-152dp" />
 </android.support.constraint.ConstraintLayout>

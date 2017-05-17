@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,14 @@ public class SavedGamesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_games);
 
+        TextView cancel = (TextView) findViewById(R.id.tv_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         ListView listView = (ListView) findViewById(R.id.sudoku_list);
         results = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, results);
@@ -52,11 +61,11 @@ public class SavedGamesActivity extends AppCompatActivity {
                 String name = adapterView.getItemAtPosition(i).toString();
                 Log.d("LOAD", name);
                 SudokuGame game = sudokuGames.get(name);
-                game.setDifficulty(uids.get(name));
                 DataResult.getInstance().setSudokuGame(game);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    DataResult.getInstance().setSudokuModel(new FirebaseModel("/Users/"+user.getUid()));
+                    DataResult.getInstance().setSudokuModel(
+                            new FirebaseModel(FirebaseDatabase.getInstance().getReference("/Users/"+user.getUid()).child(uids.get(name))));
                     Intent intent = new Intent(SavedGamesActivity.this, GameActivity.class);
                     startActivity(intent);
                 } else {
@@ -69,10 +78,15 @@ public class SavedGamesActivity extends AppCompatActivity {
         sudokuGames = new ConcurrentHashMap<>();
         uids = new ConcurrentHashMap<>();
 
+        final ProgressDialog progressDialog;
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            progressDialog = ProgressDialog.show(SavedGamesActivity.this,
+                    "Complete Sudoku",
+                    "Loading saved games");
             DatabaseReference db = FirebaseDatabase.getInstance().getReference("/Users/"+user.getUid()).child("sudokus");
-            db.addListenerForSingleValueEvent(new ValueEventListener() {
+            db.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     Log.e("Count " ,""+snapshot.getChildrenCount());
@@ -81,20 +95,21 @@ public class SavedGamesActivity extends AppCompatActivity {
                         SaveGame saveGame = postSnapshot.getValue(SaveGame.class);
                         SudokuGame game = FirebaseModel.createSudokuGame(saveGame);
 
-                        String name = String.format("%s (%s)\nDifficulty: %s\n%s Score: %d", game.getName(),
+                        String name = String.format("%s (%s)\nDifficulty: %s\nStatus: %s \nScore: %d", game.getName(),
                                 game.getElapsedFormatted(), game.getDifficulty(), game.getStatus(), game.getScore());
                         results.add(name);
                         sudokuGames.put(name, game);
                         uids.put(name, key);
                         adapter.notifyDataSetChanged();
                     }
-
+                    progressDialog.dismiss();
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Toast toast = Toast.makeText(SavedGamesActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT);
                     toast.show();
+                    progressDialog.dismiss();
                 }
             });
         } else {
@@ -102,54 +117,6 @@ public class SavedGamesActivity extends AppCompatActivity {
             toast.show();
         }
 
-        //AsyncTaskLoad loader = new AsyncTaskLoad();
-        //loader.execute("blah");
     }
 
-    private class AsyncTaskLoad extends AsyncTask<String, String, String> {
-
-        private String resp;
-        ProgressDialog progressDialog;
-
-        @Override
-        protected String doInBackground(String... params) {
-            publishProgress("Sleeping..."); // Calls onProgressUpdate()
-            try {
-                int time = Integer.parseInt(params[0])*1000;
-
-                Thread.sleep(time);
-                resp = "Slept for " + params[0] + " seconds";
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                resp = e.getMessage();
-            } catch (Exception e) {
-                e.printStackTrace();
-                resp = e.getMessage();
-            }
-            return resp;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            //finalResult.setText(result);
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(SavedGamesActivity.this,
-                    "Complete Sudoku",
-                    "Loading saved games");
-        }
-
-
-        @Override
-        protected void onProgressUpdate(String... text) {
-            //finalResult.setText(text[0]);
-
-        }
-    }
 }

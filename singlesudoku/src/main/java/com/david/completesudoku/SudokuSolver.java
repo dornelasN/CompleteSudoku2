@@ -9,7 +9,7 @@ import java.util.Stack;
  * @author David
  */
 public class SudokuSolver {
-    
+
     public static Sudoku solve(Sudoku s) {
         int length = s.getLength();
         int[][] cells = new int[length][length];
@@ -23,7 +23,7 @@ public class SudokuSolver {
         else
             return null;
     }
-    
+
     public static boolean solve(int i, int j, int[][] cells) {
         if (i == 9) {
             i = 0;
@@ -75,7 +75,7 @@ public class SudokuSolver {
     private Stack<Integer> remainingStack;
     private Stack<int[]> strategyCountStack;
     private Stack<int[]> cellStrategyStack;
-    
+
     public SudokuSolver(Sudoku s) {
         sudoku = s;
         original = s;
@@ -94,7 +94,7 @@ public class SudokuSolver {
     public Sudoku getSudoku() {
         return sudoku;
     }
-    
+
     /*
     Strategy index:
     0: None
@@ -105,37 +105,38 @@ public class SudokuSolver {
     5: Hidden Pairs
     6: Hidden Triples
     7: Intersection Removal
-    8: Brute Force
+    8: X Wing
+    9: Brute Force
     */
     private void setCellStrategy(Cell c, int strategy) {
         if (strategy > cellStrategies[c.getId()])
             cellStrategies[c.getId()] = strategy;
     }
-    
+
     public static String getStrategyName(int index) {
         String[] strategyNames = {
-            "None", 
-            "Possible Values",
-            "Hidden Singles",
-            "Naked Pairs",
-            "Naked Triples",
-            "Hidden Pairs",
-            "Hidden Triples",
-            "Intersection Removal",
-            "X-Wing",
-            "Brute Force"};
+                "None",
+                "Possible Values",
+                "Hidden Singles",
+                "Naked Pairs",
+                "Naked Triples",
+                "Hidden Pairs",
+                "Hidden Triples",
+                "Intersection Removal",
+                "X Wing",
+                "Brute Force"};
         if (index < strategyNames.length && index >= 0) {
             return strategyNames[index];
         }
         return "None";
     }
-    
+
     public int getStrategyCount(int index) {
         if (index < strategyCounts.length &&  index >= 0)
             return strategyCounts[index];
         return 0;
     }
-    
+
     public int getStrategyCountByCell(int index) {
         int[] byCell = new int[STRATEGY_NUMBER];
         for (int i = 0; i < cellStrategies.length; i++) {
@@ -145,25 +146,25 @@ public class SudokuSolver {
             return byCell[index];
         return 0;
     }
-    
+
     public boolean isStrategyUsed(int index) {
         if (index < strategyCounts.length && index >= 0)
             return (strategyCounts[index] > 0 || index == 0);
         return false;
     }
-    
-    private void printStrategies() {  
+
+    private void printStrategies() {
         for (int i = 0; i < STRATEGY_NUMBER; i++) {
-            System.out.printf("%-21s %3d By Cell: %d%n", 
+            System.out.printf("%-21s %3d By Cell: %d%n",
                     getStrategyName(i)+":", getStrategyCount(i), getStrategyCountByCell(i));
         }
     }
-   
+
     public boolean solve() {
         initializeCells();
         return recursiveSolve();
     }
-    
+
     public boolean recursiveSolve() {
         //System.out.println("Before:");
         //writeMatrix();
@@ -201,7 +202,7 @@ public class SudokuSolver {
             changed = findXWing();
             //System.out.println("Intersection Reduction: "+changed);
         }
-        
+
         if (remaining > 0) {
             return bruteForce();
         }
@@ -214,7 +215,7 @@ public class SudokuSolver {
         updateOriginal();
         return checkValidity(sudoku);
     }
-    
+
     public void initializeCells() {
         for (int i = 0; i < length; ++i) {
             for (int j = 0; j < length; ++j) {
@@ -228,7 +229,7 @@ public class SudokuSolver {
             }
         }
     }
-    
+
     private int update() {
         int solved = 1;
         strategy = 1;
@@ -238,7 +239,7 @@ public class SudokuSolver {
         strategy++;
         return solved;
     }
-    
+
     private int findPossibleValues() {
         int solved = 0;
         int changes = 0;
@@ -267,7 +268,7 @@ public class SudokuSolver {
         strategyCounts[strategy] += changes;
         return solved;
     }
-    
+
     public int setPossibleValues(Cell c) {
         int changes = 0;
         int preset = c.getPossibilityCount();
@@ -291,7 +292,7 @@ public class SudokuSolver {
         }
         return changes;
     }
-    
+
     private int findHiddenSingles() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -302,7 +303,7 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setHiddenSingles(SubSudoku s) {
         int changes = 0;
         for (int n = 1; n <= length; ++n) {
@@ -310,7 +311,7 @@ public class SudokuSolver {
             for (int i = 0; i < length; ++i) {
                 if (s.getCell(i).containsPossibility(n)) {
                     ++count;
-                    if (count > 1) 
+                    if (count > 1)
                         break;
                     index = i;
                     //update();
@@ -330,7 +331,7 @@ public class SudokuSolver {
         }
         return changes;
     }
-    
+
     private int findNakedPairs() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -341,7 +342,7 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setNakedPairs(SubSudoku s) {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -364,9 +365,9 @@ public class SudokuSolver {
                     //if a match is found, remove the pair from all other cells
                     int cellsModified = 0;
                     for (int k = 0; k < length; k++) {
-                        Cell temp = s.getCell(k);         
+                        Cell temp = s.getCell(k);
                         if (temp.getValue() == 0 && j != k && temp.getId() != c.getId()) {
-                            //increment cells modified count only if possibilty(s) were set                            
+                            //increment cells modified count only if possibilty(s) were set
                             if (temp.setPossibile(a, false) | temp.setPossibile(b, false)) {
                                 //System.out.println("Reduction: naked pair");
                                 ++cellsModified;
@@ -384,7 +385,7 @@ public class SudokuSolver {
         }
         return changes;
     }
-    
+
     private int findNakedTriples() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -395,7 +396,7 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setNakedTriples(SubSudoku s) {
         int changes = 0;
         //find number of cells with 2-3 cells
@@ -410,7 +411,7 @@ public class SudokuSolver {
         if (setSize < 3) {
             return changes;
         }
-        
+
         //create/fill set data structures for finding triples
         int[] indexes = new int[setSize];
         BitSet[] possibilities = new BitSet[setSize];
@@ -430,7 +431,7 @@ public class SudokuSolver {
                 }
             }
         }
-        //check if the union of all combinations of three cells forms a set of size 3 
+        //check if the union of all combinations of three cells forms a set of size 3
         for (int i = 0; i < setSize-2; ++i) {
             for (int j = i+1; j < setSize-1; ++j) {
                 for (int k = j+1; k < setSize; ++k) {
@@ -467,7 +468,7 @@ public class SudokuSolver {
 
         return changes;
     }
-    
+
     private int findHiddenPairs() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -478,7 +479,7 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setHiddenPairs(SubSudoku s) {
         int changes = 0;
         int[] pairs = new int[length];
@@ -512,7 +513,7 @@ public class SudokuSolver {
                         //hidden pair found
                         int cellsModified = 0;
                         Cell a = s.getCell(pairs[i] / length);
-                        Cell b = s.getCell(pairs[i] % length);                 
+                        Cell b = s.getCell(pairs[i] % length);
                         //remove other possibilities from cells a & b
                         if (a.getPossibilityCount() > 2) {
                             //increment cells modified count only if cell was hidden
@@ -533,7 +534,7 @@ public class SudokuSolver {
                             setCellStrategy(b, strategy);
                         }
                         //increment change count only if cells were modified
-                        if (cellsModified > 0) {                      
+                        if (cellsModified > 0) {
                             ++changes;
                         }
                         break;
@@ -541,10 +542,10 @@ public class SudokuSolver {
                 }
             }
         }
-        
+
         return changes;
     }
-    
+
     private int findHiddenTriples() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -555,10 +556,10 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setHiddenTriples(SubSudoku s) {
         int changes = 0;
-        
+
         BitSet indexes[] = new BitSet[length];
         int[] counts = new int[length];
         //find the the counts and index bitset of each number
@@ -579,8 +580,8 @@ public class SudokuSolver {
             //save count if = 2 or 3
             counts[n-1] = (count == 2 || count == 3) ? count : -1;
         }
-        
-        //check if the union of all combinations of three numbers that appear 2-3 times forms a set of size 3 
+
+        //check if the union of all combinations of three numbers that appear 2-3 times forms a set of size 3
         for (int i = 0; i < length-2; ++i) {
             if (counts[i] < 2)
                 continue;
@@ -633,19 +634,19 @@ public class SudokuSolver {
                             //System.out.println("Reduction: hidden triple");
                             setCellStrategy(s.getCell(c), strategy);
                         }
-                        
+
                         //increment change count only if cells were modified
-                        if (cellsModified > 0) {                      
+                        if (cellsModified > 0) {
                             ++changes;
                         }
                     }
                 }
             }
         }
-        
+
         return changes;
     }
-    
+
     private int intersectionRemoval() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -656,7 +657,7 @@ public class SudokuSolver {
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int pointingNumbers(SubSudoku s) {
         int changes = 0;
         //remove all possibilities of numbers in the rows/columns outside the intersections
@@ -698,7 +699,7 @@ public class SudokuSolver {
                         }
                     }
                 }
-                if (cellsModified > 0) {                      
+                if (cellsModified > 0) {
                     ++changes;
                 }
             }
@@ -716,14 +717,14 @@ public class SudokuSolver {
                         }
                     }
                 }
-                if (cellsModified > 0) {                      
+                if (cellsModified > 0) {
                     ++changes;
                 }
             }
         }
         return changes;
     }
-    
+
     private int boxLine(SubSudoku s) {
         int changes = 0;
         //remove all possibilities of numbers in the boxes outside the intersections
@@ -756,25 +757,25 @@ public class SudokuSolver {
                         }
                     }
                 }
-                if (cellsModified > 0) {                      
+                if (cellsModified > 0) {
                     ++changes;
                 }
             }
         }
         return changes;
     }
-    
+
     private int findXWing() {
         int changes = 0;
         changes += setXWing("row");
         changes += setXWing("column");
         for (int i = 0; i < length; ++i) {
-            
+
         }
         strategyCounts[strategy++] += changes;
         return changes;
     }
-    
+
     private int setXWing(String type) {
         int changes = 0;
         int[][] pairs = new int[length][length];
@@ -845,7 +846,7 @@ public class SudokuSolver {
                             }
                         }
                         //increment change count only if cells were modified
-                        if (cellsModified > 0) {                      
+                        if (cellsModified > 0) {
                             ++changes;
                         }
                         break;
@@ -853,10 +854,10 @@ public class SudokuSolver {
                 }
             }
         }
-        
+
         return changes;
     }
-    
+
     private boolean bruteForce() {
         Cell c = getMin();
         int iMin = c.getId()/length;
@@ -892,7 +893,7 @@ public class SudokuSolver {
         }
         return false;
     }
-    
+
     public Cell getMin() {
         //find cell with smallest number of possibilities
         int min = length+1;
@@ -908,7 +909,7 @@ public class SudokuSolver {
         }
         return minCell;
     }
-    
+
     public void updateOriginal() {
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
@@ -921,7 +922,7 @@ public class SudokuSolver {
             }
         }
     }
-    
+
     public static boolean checkValidity(Sudoku s) {
         if (s == null)
             return false;
@@ -931,56 +932,69 @@ public class SudokuSolver {
         boolean[][] rows = new boolean[length][length];
         boolean[][] columns = new boolean[length][length];
         try {
-        for (int i = 0; i < length; i++) {
-            //check each box, row, and column for duplicate numbers
-            for (int j = 0; j < length; j++) {
-                if (boxes[i][s.getBox(i).getCell(j).getValue()-1])
-                    return false;
-                else
-                    boxes[i][s.getBox(i).getCell(j).getValue()-1] = true;
-                
-                if (rows[i][s.getRow(i).getCell(j).getValue()-1])
-                    return false;
-                else
-                    rows[i][s.getRow(i).getCell(j).getValue()-1] = true;
-                
-                if (columns[i][s.getColumn(i).getCell(j).getValue()-1])
-                    return false;
-                else
-                    columns[i][s.getColumn(i).getCell(j).getValue()-1] = true;
+            for (int i = 0; i < length; i++) {
+                //check each box, row, and column for duplicate numbers
+                for (int j = 0; j < length; j++) {
+                    if (boxes[i][s.getBox(i).getCell(j).getValue()-1])
+                        return false;
+                    else
+                        boxes[i][s.getBox(i).getCell(j).getValue()-1] = true;
+
+                    if (rows[i][s.getRow(i).getCell(j).getValue()-1])
+                        return false;
+                    else
+                        rows[i][s.getRow(i).getCell(j).getValue()-1] = true;
+
+                    if (columns[i][s.getColumn(i).getCell(j).getValue()-1])
+                        return false;
+                    else
+                        columns[i][s.getColumn(i).getCell(j).getValue()-1] = true;
+                }
             }
-        }
         } catch (IndexOutOfBoundsException e) {
             //if contains number outside of valid range, return false
             return false;
         }
         return true;
     }
-    
+
     public int getNumericalScore() {
         int[] weights = new int[strategyCounts.length];
         for (int i = 0; i < weights.length; ++i) {
             weights[i] = i;
         }
         int sum = 0;
-        for (int i = 0; i < weights.length; i++) 
+        for (int i = 0; i < weights.length; i++)
         {
-            sum += strategyCounts[i] * weights[i];    
+            sum += strategyCounts[i] * weights[i];
         }
         return sum; //difficulty score
     }
-    
+
     public String getDifficulty() {
-        return "Medium"; //difficulty class
+        double[] weights = {-0.31564061,  0.00595505,  0.0102608,
+                0.02995759,  0.03746034,  0.09550099,
+                0.26383384,  0.02606311,  0.265347,    0.0497289 };
+        double sum = 11.0874694522;
+        for (int i = 0; i < strategyCounts.length; i++) {
+            sum += strategyCounts[i]*weights[i];
+        }
+        if (sum > 4) {
+            sum = 4;
+        } else if (sum < 0) {
+            sum = 0;
+        }
+        String[] difficulties = {"Ultra Easy", "Easy", "Medium", "Hard", "Diabolical"};
+        return difficulties[(int)sum];
     }
-    
+
     private void writeMatrix() {
         for (int i = 0; i < 9; ++i) {
             if (i % 3 == 0)
                 System.out.print(" -----------------------"+System.lineSeparator());
             for (int j = 0; j < 9; ++j) {
                 if (j % 3 == 0) System.out.print("| ");
-                System.out.print(sudoku.getCell(i, j).getValue() == 0 ? " " : 
+                System.out.print(sudoku.getCell(i, j).getValue() == 0 ? " " :
                         Integer.toString(sudoku.getCell(i, j).getValue()));
 
                 System.out.print(' ');
@@ -989,16 +1003,16 @@ public class SudokuSolver {
         }
         System.out.print(" -----------------------"+System.lineSeparator());
     }
-    
+
     //for testing which update algorithm is faster
-    public boolean testUpdate(int version) {        
+    public boolean testUpdate(int version) {
         int changed = 1;
         while (changed == 1) {
             changed = checkColumnsAndRows2(version);
         }
         return true;
     }
-    
+
     private int checkColumnsAndRows2(int version) {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -1021,14 +1035,14 @@ public class SudokuSolver {
         }
         return changes;
     }
-    
+
     private void setPossibleValues2(Cell c, int version) {
         for (int i = 1; i <= length; ++i) {
             c.setPossibile(i, true);
         }
-        
+
         if (version == 1) {
-            search: for (int i = 1; i <= length; ++i) { 
+            search: for (int i = 1; i <= length; ++i) {
                 for (int j = 0; j < length; ++j) {
                     if (c.getBox().getCell(j).getValue() == i) {
                         c.setPossibile(i, false);
@@ -1059,7 +1073,7 @@ public class SudokuSolver {
         }
     }
     //end test
-    
+
     //testing naked pair implementations
     public boolean solve2() {
         initializeCells();
@@ -1071,10 +1085,10 @@ public class SudokuSolver {
                 continue;
             changed = findNakedPairs2();
         }
-        
+
         return checkValidity(sudoku);
     }
-    
+
     private int findNakedPairs2() {
         int changes = 0;
         for (int i = 0; i < length; ++i) {
@@ -1099,7 +1113,7 @@ public class SudokuSolver {
         }
         return changes;
     }
-    
+
     private int setNakedPairs2(Cell c, SubSudoku s, int a, int b) {
         int changes = 0;
         for (int i = 0; i < length; ++i) {

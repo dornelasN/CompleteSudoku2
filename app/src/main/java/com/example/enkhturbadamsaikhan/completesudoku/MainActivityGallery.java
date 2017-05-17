@@ -83,35 +83,29 @@ public class MainActivityGallery extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 Log.d(TAG, String.valueOf(bitmap));
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
                 Mat pic = new Mat();
                 Utils.bitmapToMat(bitmap, pic);
-                Imgproc.resize(pic, pic, new Size(width/2, height/2));
-                Utils.matToBitmap(pic, bitmap);
-                pic.release();
+                Imgproc.resize(pic, pic, new Size(pic.cols()/2, pic.rows()/2));
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
                 imageView.setImageBitmap(bitmap);
-                Log.d(TAG, "width: "+width+" height"+height);
-                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width,height);
+                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(300, 300);
                 imageView.setLayoutParams(params);
                 AsyncTaskRunner proc = new AsyncTaskRunner();
-                proc.execute(bitmap);
+                proc.execute(pic);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private class AsyncTaskRunner extends AsyncTask<Bitmap, Bitmap, Mat> {
+    private class AsyncTaskRunner extends AsyncTask<Mat, Bitmap, Mat> {
 
         private Mat pic;
         ProgressDialog progressDialog;
 
         @Override
-        protected Mat doInBackground(Bitmap... params) {
-            pic = new Mat();
-            Utils.bitmapToMat(params[0], pic);
+        protected Mat doInBackground(Mat... params) {
+            pic = params[0];
             Mat input = pic.clone();
 
             Imgproc.GaussianBlur(input, input, new Size(11, 11), 0);

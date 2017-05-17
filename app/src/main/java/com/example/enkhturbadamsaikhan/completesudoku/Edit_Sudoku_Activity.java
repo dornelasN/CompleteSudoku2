@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +53,7 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
     public static final int SAVE_SUCCESS = 0;
     public static final int SAVE_FAILURE = 1;
 
-    private SaveGame sudokuGame;
+    private SudokuGame sudokuGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,22 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
 
         Bitmap bitMap = Bitmap.createBitmap(img.cols(), img.rows(),Bitmap.Config.RGB_565);
         Utils.matToBitmap(img, bitMap);
+
+        Button ok = (Button) findViewById(R.id.bt_ok);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Edit_Sudoku_Activity.this, SinglePlayerActivity.class);
+                startActivity(i);
+            }
+        });
+        Button retake = (Button) findViewById(R.id.bt_retake);
+        retake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //prepare handler
         saveHandler = new Handler(){
@@ -227,7 +245,15 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
 
                     String bmpInfo = String.format("width: %d, height %d", bmp.getWidth(), bmp.getHeight());
                     Log.d(TAG, bmpInfo);
-                    int ans = Integer.parseInt(mOCR.doOCR(bmp));
+                    int ans = 0;
+                    try {
+                        ans = Integer.parseInt(mOCR.doOCR(bmp));
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                    if (ans < 1) {
+                        ans = 0;
+                    }
                     if (ans > 9) {
                         ans = trimNum(ans);
                     }
@@ -258,11 +284,11 @@ public class Edit_Sudoku_Activity extends AppCompatActivity {
 
             TextView difficulty = (TextView) findViewById(R.id.difficulty_view);
             Sudoku sudoku = new Sudoku(array);
-            SudokuSolver s = new SudokuSolver(sudoku);
+            SudokuSolver s = new SudokuSolver(new Sudoku(sudoku));
             if (s.solve()) {
                 difficulty.setText(s.getDifficulty());
 
-                SudokuGame sudokuGame = new SudokuGame(sudoku);
+                sudokuGame = new SudokuGame(sudoku);
                 sudokuGame.setDifficulty(s.getDifficulty());
                 DataResult.getInstance().setSudokuGame(sudokuGame);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
